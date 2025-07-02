@@ -5,7 +5,7 @@ Welcome to my internship project repository for **Cantilever**. This repository 
 
 ## 🚀 Projects Overview
 
-### 🔐 [Keylogger with Screenshot Capture](https://github.com/seeratemarryum/CANTILEVER/tree/keylogger)
+### 🔐 [Keylogger with Screenshot Capture](https://github.com/seeratemarryum/CANTILEVER/tree/KeyLogger)
 A multi-threaded Python script that captures keystrokes and periodic screenshots from the user’s machine. Useful for security monitoring or understanding how malware behaves.
 
 - 📌 Technologies: `pynput`, `pyautogui`, `threading`, `logging`
@@ -14,7 +14,7 @@ A multi-threaded Python script that captures keystrokes and periodic screenshots
 - 📂 Logs are saved locally in structured folders
 
 
-### 🌐 [WHOIS Domain Info Checker](https://github.com/seeratemarryum/CANTILEVER/tree/domain-checker)
+### 🌐 [WHOIS Domain Info Checker](https://github.com/seeratemarryum/CANTILEVER/tree/Domain-Lookup)
 A tool to query WHOIS data for any domain, extracting registrar, creation/expiration dates, and name server info. Outputs results to a CSV for further analysis.
 
 - 📌 Technologies: `python-whois`, `csv`, `datetime`, `os`
