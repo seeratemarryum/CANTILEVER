@@ -2,7 +2,6 @@
 
 A simple Python script to fetch and save WHOIS information for any domain. The tool uses the `whois` library to extract registrar details, creation and expiration dates, and DNS name servers, then logs the results into a CSV file for later reference.
 
----
 
 ## 🚀 Features
 
@@ -17,7 +16,6 @@ A simple Python script to fetch and save WHOIS information for any domain. The t
   - Protected/invalid domains
   - Missing or null WHOIS fields
 
----
 
 ## 🛠️ Requirements
 
