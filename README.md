@@ -17,6 +17,8 @@ This project is a Python-based GUI application that captures both **keystrokes**
 ## 📸 GUI Preview
 
 ![image](https://github.com/user-attachments/assets/b77f3bd1-36f2-44c0-9be8-831f902b91e7)
+![image](https://github.com/user-attachments/assets/20e57aca-7831-476b-b62c-ac42c26cc41e)
+
 
 
 ## 🚀 Getting Started
