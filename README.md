@@ -1,20 +1,25 @@
-# 🌐 WHOIS Domain Info Checker
+# 🌐 Domain WHOIS Lookup Tool – GUI Version
 
-A simple Python script to fetch and save WHOIS information for any domain. The tool uses the `whois` library to extract registrar details, creation and expiration dates, and DNS name servers, then logs the results into a CSV file for later reference.
+A Python-based desktop application with a simple GUI to perform **WHOIS lookups** on domain names and export results to a CSV file. Built as part of my internship at **Cantilever**, this project showcases GUI-based automation and data handling.
 
 
-## 🚀 Features
+## ✨ Features
 
-- 🧠 Fetches domain info using Python’s `whois` library
-- 📅 Displays:
-  - Domain registrar
+- ✅ Enter any domain name and fetch WHOIS data
+- 🧠 Displays:
+  - Registrar
   - Creation date
   - Expiration date
   - Name servers
-- 📂 Saves output in `output/domain_info.csv`
-- ⚠️ Handles:
-  - Protected/invalid domains
-  - Missing or null WHOIS fields
+- 💾 Saves results to `output/domain_info.csv`
+- ❌ Handles invalid or protected domains with error pop-ups
+- 📊 User-friendly GUI interface with live result display
+
+
+## 📸 GUI Preview
+![image](https://github.com/user-attachments/assets/c7dc76b2-e5c0-4128-8b29-f954d94dc986)
+Output CSV:
+![image](https://github.com/user-attachments/assets/ce94d0ed-3978-4c44-a6c3-77498fe47ead)
 
 
 ## 🛠️ Requirements
